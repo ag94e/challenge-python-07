@@ -71,37 +71,52 @@ DATA = [
     },
 ]
 
+def homeless_key(worker):
+    homeless = worker.copy()
+    homeless['homeless'] = (homeless['organization'] == '')
+    return homeless
+
+def old_key(old_people):
+    old = old_people.copy()
+    old['old'] = (old['age'] >= 30)
+    return old
 
 def run():
 
-    all_python_devs =  # Using filter, generate a list with all the python devs
-    all_Platzi_workers =  # Using filter, generate a list with all the Platzi workers
-    adults =  # Using filter, generate a list with all people over 18 years old
-    workers =  # Using map, generate a new list of people with a key 'homeless' with True or False values, if 'organization' have something or not
-    old_people =  # Using map, generate a new list of people with a key 'old' with True or False values, if 'age' is greater than 30 or not
+    all_python_devs = filter(lambda value: value['language'] == 'python',DATA)
+
+    all_Platzi_workers =  filter(lambda value: value['organization'] == 'Platzi', DATA)
+    
+    adults = filter(lambda value: value['age'] >= 18, DATA)
+
+    workers = list(map(homeless_key, DATA))
+    
+    old_people = list(map(old_key, DATA))
 
     print('Python devs: ')
     for dev in all_python_devs:
-        print(dev['name'])
+        print('-', dev['name'])
     print('\n\n')
 
     print('Platzi workers: ')
     for worker in all_Platzi_workers:
-        print(worker['name'])
+        print('-', worker['name'])
     print('\n\n')
 
     print('Adults: ')
     for adult in adults:
-        print(adult['name'])
+        print('-', adult['name'])
     print('\n\n')
 
+    print('Workers: ')
     print(workers)
     print('\n\n')
 
+    print('Old People: ')
     print(old_people)
     print('\n\n')
 
-    # Remember: when possible, use lambdas
+    # # Remember: when possible, use lambdas
 
 
 if __name__ == '__main__':
